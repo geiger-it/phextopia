@@ -6,8 +6,17 @@
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-$whoops = new \Whoops\Run;
+$whoops = new Whoops\Run;
 $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
 $whoops->register();
 
-echo "Test";
+$clientId = '';
+$client = new \Phextopia\Client($clientId);
+
+$search = new \Phextopia\Search\Search($client);
+//$page = new Phextopia\PageBuilder\PageBuilder($client);
+
+$result = $search->search();
+
+dump(json_decode($result));
+
