@@ -1,0 +1,24 @@
+---
+
+- name: Add nginx default virtual host configuration
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/sites-available/default
+  # notify: Restart Nginx
+
+- name: Install Composer Packages/Libraries
+  composer:
+    command: install
+    working_dir: "{{ app_root_dir }}"
+    no_dev: no # yes dev
+
+# - name: Set Dev/QA environment file (.env)
+#   template:
+#     src: .env.j2
+#     dest: "{{ app_root_dir }}/.env"
+
+- name: Ensure a test index.php file exists
+  template:
+    src: index.php.j2
+    dest: "{{ app_root_dir }}/index.php"
+    force: no

@@ -1,0 +1,28 @@
+{
+    "name": "geiger-it/phextopia",
+    "description": "Nextopia php library",
+    "keywords": ["library", "nextopia"],
+    "license": "MIT",
+    "type": "library",
+    "require": {
+        "php": "^7.2",
+        "guzzlehttp/guzzle": "~6.3"
+    },
+    "require-dev": {
+        "codeception/codeception": "~2.4",
+        "filp/whoops": "^2.1.4",
+        "symfony/var-dumper": "^4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Phextopia\\": "src/"
+        }
+    },
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "optimize-autoloader": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

@@ -1,0 +1,17 @@
+---
+
+- name: Add nodejs key
+  apt_key:
+    url: "https://deb.nodesource.com/gpgkey/nodesource.gpg.key"
+    state: present
+
+- name: Add nodejs deb source
+  apt_repository:
+    repo: "deb https://deb.nodesource.com/node_{{ nodejs_major_version }}.x xenial main"
+    state: present
+    update_cache: yes
+
+- name: Install nodejs
+  apt:
+    name: nodejs
+    state: present

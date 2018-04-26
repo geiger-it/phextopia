@@ -1,0 +1,36 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+
+  config.vm.box = "ubuntu/xenial64"
+  config.vm.network "private_network", ip: "192.168.20.26"
+  config.vm.network "forwarded_port", guest: 80, host: 81, auto_correct: true
+
+  config.vm.synced_folder ".", "/vagrant/", :mount_options=>["dmode=777,fmode=777"]
+
+  # Provider-specific configuration
+  config.vm.provider "virtualbox" do |vb|
+    vb.name = "phextopia"
+    vb.gui = false
+    vb.memory = 1024
+    vb.cpus = 2
+  end
+
+  config.vm.provision "ansible_local" do |ansible|
+    ansible.playbook = "provision/ansible/playbook.yml"
+    ansible_become = "yes"
+    ansible_become_method = "su"
+    ansible_become_exe = "sudo su -"
+    # ansible.verbose = "v"
+    ansible.extra_vars = {
+        project_name: 'phextopia',
+        ansible_hostname: 'phextopia.local',
+        ansible_ssh_user: 'vagrant',
+        app_root_dir: '/vagrant',
+        php_ver: '7.2',
+        nodejs_major_version: '8'
+    }
+  end
+
+end

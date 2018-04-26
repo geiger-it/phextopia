@@ -1,0 +1,25 @@
+---
+
+- name: Update OS/System Packages 
+  apt:
+    upgrade: dist
+    update_cache: yes
+    cache_valid_time: 3600
+  tags: [os]
+
+- name: Install common utilities
+  apt:
+    pkg: "{{ item }}"
+    state: present
+  with_items:
+    - curl
+    - build-essential
+    - git
+    - language-pack-en
+    - ntp
+    - python-software-properties
+    - software-properties-common
+    - ufw
+    - unzip
+    - zip
+  tags: [os]

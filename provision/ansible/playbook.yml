@@ -1,0 +1,14 @@
+---
+
+- name: "Provision a test environment for the Phextopia library"
+  hosts: all
+  become: yes
+  become_user: root
+  roles:
+    - { role: ubuntu-common }
+    - { role: unattended-upgrades }
+    - { role: npm }
+    - { role: nginx }
+    - { role: php }
+    - { role: composer }
+    - { role: phextopia }

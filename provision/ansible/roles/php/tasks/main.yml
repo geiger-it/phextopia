@@ -1,0 +1,25 @@
+---
+
+- name: Add Ondrej's PPA for PHP
+  apt_repository:
+    repo: ppa:ondrej/php
+    state: present
+
+- name: Install php{{ php_ver }}-fpm and modules
+  apt:
+    pkg: "{{ item }}"
+    state: present
+  with_items:
+    - php{{ php_ver }}-cli
+    - php{{ php_ver }}-fpm
+    - php{{ php_ver }}-mysqlnd
+    - php{{ php_ver }}-curl
+    - php{{ php_ver }}-json
+    - php{{ php_ver }}-apcu
+    - php{{ php_ver }}-mbstring
+    - php{{ php_ver }}-bcmath
+    - php{{ php_ver }}-intl
+    - php{{ php_ver }}-xml
+    - php{{ php_ver }}-zip
+    - php{{ php_ver }}-odbc
+  notify: Restart PHP
