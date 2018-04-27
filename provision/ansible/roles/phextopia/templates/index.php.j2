@@ -13,10 +13,10 @@ $whoops->register();
 $clientId = '';
 $client = new \Phextopia\Client($clientId);
 
-$search = new \Phextopia\Search\Search($client);
-//$page = new Phextopia\PageBuilder\PageBuilder($client);
+$search = new \Phextopia\Search($client);
+//$page = new Phextopia\PageBuilder($client);
 
-$result = $search->search();
+$result = $search->find('shirt');
 
 dump(json_decode($result));
 

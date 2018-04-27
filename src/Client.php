@@ -13,6 +13,7 @@ class Client
     protected $arguments = [];
     public $rejectedUserArguments;
 
+    // welp, it looks like refinements will make us allow anything/everything.
     protected $fillableArguments = ['keywords', 'page', 'xml', 'json', 'abstracted_fields', 'force_or_search',
         'initial_sort', 'initial_sort_order', 'no_metaphones', 'no_stemming', 'refinements', 'refine', 'requested_fields',
         'res_per_page', 'searchtype', 'sort_by_field', 'trim_length', 'trimmed_fields', 'and_refines', 'compact_refines',
