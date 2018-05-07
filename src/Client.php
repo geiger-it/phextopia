@@ -69,7 +69,7 @@ class Client
     public function sendRequest()
     {
         $guzzleClient = new \GuzzleHttp\Client;
-        dump($this->generateUrl());
+        //dump($this->generateUrl());
         $response = $guzzleClient->request('GET', $this->generateUrl());
         if ($response->getStatusCode() == 200 && $response->getBody()) {
             return $response->getBody();
