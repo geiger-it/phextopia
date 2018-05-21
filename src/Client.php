@@ -1,23 +1,21 @@
 <?php
 
-
 namespace Phextopia;
-
 
 class Client
 {
-
     protected $client_id;
     protected $ip;
     protected $user_agent;
     protected $arguments = [];
     public $rejectedUserArguments;
 
-    // welp, it looks like refinements will make us allow anything/everything.
-    protected $fillableArguments = ['keywords', 'page', 'xml', 'json', 'abstracted_fields', 'force_or_search',
-        'initial_sort', 'initial_sort_order', 'no_metaphones', 'no_stemming', 'refinements', 'refine', 'requested_fields',
-        'res_per_page', 'searchtype', 'sort_by_field', 'trim_length', 'trimmed_fields', 'and_refines', 'compact_refines',
-        'custom_ranges', 'paginate_refines', 'refines_mode', 'requested_refines', 'return_single_refines'];
+    protected $defaultArguments = ['keywords', 'page', 'xml', 'abstracted_fields', 'force_or_search', 'initial_sort',
+        'initial_sort_order', 'no_metaphones', 'no_stemming', 'refinements', 'refine', 'requested_fields',
+        'res_per_page', 'searchtype', 'sort_by_field', 'trim_length', 'trimmed_fields', 'and_refines',
+        'compact_refines', 'custom_ranges', 'paginate_refines', 'refines_mode', 'requested_refines',
+        'return_single_refines', 'disable_merchandizing', 'ignore_redirects', 'cache_call', 'min_max_values',
+        'related_searches', 'json'];
 
     protected $singletonArguments = ['json', 'xml', 'page'];
 
@@ -25,7 +23,7 @@ class Client
     const RESPONSE_CONTENT_TYPES = ['html', 'xml', 'json'];
     const DEFAULT_RESP_CONT_TYPE = 'json';
 
-    public function __construct($client_id, $useHttpGetForArguments = true, $ip = "", $user_agent = "")
+    public function __construct($client_id, $useHttpGetForArguments = true, array $refinements = [], $ip = "", $user_agent = "")
     {
         $this->client_id = $client_id;
         if(!$this->client_id){
@@ -33,9 +31,10 @@ class Client
         }
         $this->ip = $ip ?: $_SERVER['REMOTE_ADDR'];
         $this->user_agent = $user_agent ?: $_SERVER['HTTP_USER_AGENT'];
+        $arguments = array_unique(array_merge($this->defaultArguments, $refinements));
         if ($useHttpGetForArguments) {
             foreach ($_GET as $k => $v) {
-                if (in_array($k, $this->fillableArguments)) {
+                if (in_array($k, $arguments)) {
                     $this->addArgument($k, $v);
                 } else {
                     $this->rejectedUserArguments[$k] = $v;
@@ -69,7 +68,7 @@ class Client
     public function sendRequest()
     {
         $guzzleClient = new \GuzzleHttp\Client;
-        dump($this->generateUrl());
+        //dump($this->generateUrl());
         $response = $guzzleClient->request('GET', $this->generateUrl());
         if ($response->getStatusCode() == 200 && $response->getBody()) {
             return $response->getBody();
@@ -123,5 +122,4 @@ class Client
         $this->upsertArgument('user_agent', $this->user_agent);
         return static::BASE_URL . '?' . http_build_query(array_merge($this->arguments));
     }
-
 }
