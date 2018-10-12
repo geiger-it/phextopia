@@ -9,6 +9,7 @@ class Client
     protected $user_agent;
     protected $arguments = [];
     public $rejectedUserArguments;
+    public $responseTimeoutInSeconds = 3.0;
 
     protected $defaultArguments = ['keywords', 'page', 'xml', 'abstracted_fields', 'force_or_search', 'initial_sort',
         'initial_sort_order', 'no_metaphones', 'no_stemming', 'refinements', 'refine', 'requested_fields',
@@ -69,7 +70,7 @@ class Client
     {
         $guzzleClient = new \GuzzleHttp\Client;
         //dump($this->generateUrl());
-        $response = $guzzleClient->request('GET', $this->generateUrl());
+        $response = $guzzleClient->request('GET', $this->generateUrl(), ['connect_timeout' => $this->responseTimeoutInSeconds]);
         if ($response->getStatusCode() == 200 && $response->getBody()) {
             return $response->getBody();
         }

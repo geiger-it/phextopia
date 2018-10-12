@@ -18,9 +18,10 @@ class PageBuilder
         $this->client = $client;
     }
 
-    public function load($name = '', $format = 'json')
+    public function load($name = '', $format = 'json', $responseTimeoutInSeconds = 1.2)
     {
         $this->client->setContentType($format);
+        $this->client->responseTimeoutInSeconds = $responseTimeoutInSeconds;
 
         // $pageName supersedes $_GET['nxt_landing_page']
         $this->client->upsertArgument('nxt_landing_page', $name);

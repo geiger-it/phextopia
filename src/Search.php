@@ -19,9 +19,10 @@ class Search
         $this->setDefaultArguments();
     }
 
-    public function find($keywords = '', $arguments = [], $format = 'json')
+    public function find($keywords = '', $arguments = [], $responseTimeoutInSeconds = 2.5, $format = 'json')
     {
         $this->client->setContentType($format);
+        $this->client->responseTimeoutInSeconds = $responseTimeoutInSeconds;
 
         foreach ($arguments as $k => $v) {
             $this->client->upsertArgument($k, $v);
