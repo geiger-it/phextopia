@@ -18,7 +18,7 @@ class PageBuilder
         $this->client = $client;
     }
 
-    public function load($name = '', $format = 'json', $responseTimeoutInSeconds = 1.2)
+    public function load($name = '', $responseTimeoutInSeconds = 1.2, $format = 'json')
     {
         $this->client->setContentType($format);
         $this->client->responseTimeoutInSeconds = $responseTimeoutInSeconds;
