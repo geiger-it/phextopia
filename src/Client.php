@@ -31,7 +31,7 @@ class Client
             throw new \InvalidArgumentException('Missing Nextopia Client Id');
         }
         $this->ip = $ip ?: $_SERVER['REMOTE_ADDR'];
-        $this->user_agent = $user_agent ?: isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
+        $this->user_agent = $user_agent ?: $_SERVER['HTTP_USER_AGENT'] ?? '';
         $arguments = array_unique(array_merge($this->defaultArguments, $refinements));
         if ($useHttpGetForArguments) {
             foreach ($_GET as $k => $v) {
